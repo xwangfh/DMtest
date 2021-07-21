@@ -1,0 +1,54 @@
+---
+title: "DMtest"
+author: "James Dai and Xiaoyu Wang"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DMtest}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# Introduction
+Cancer development is ubiquitously associated with aberrant DNA methylation.
+Noninvasive biomarkers incorporating DNA methylation signatures are of rising
+interest for cancer early detection. Statistical tests for discovering dierential
+methylation markers have largely focused on assessing dierences of mean
+methylation levels, e.g., between cancer and normal samples. Previously two standard tests 
+were applied for the task: differential methylated CpG (DMC) and
+differential variability CpGs (DVC). In the package we propose tow joint tests (DMVC) 
+combing DMC and DVC. The first DMVC is proposed to test hypermethylation and 
+increased variance in cancer, and the second DMVC is aimed to test for differential methylation
+in both direction and increased variance in cancer.
+
+The proposed joint tests substantially improved detection power in 
+simulation studies, and yields more cancer CpG markers than the standard tests.
+
+
+# Example
+The following example takes DNA methylation data from 334 samples of TCGA-COAD;
+In the illustration we use top 1000 CpG probes to save time. For genome-wide data,
+users can set appropriate corenumber and use the parallel version for the joint tests.
+
+```{r setup}
+library(DMtest)
+#load example data
+data(beta)
+dim(beta)
+data("covariate")
+dim(covariate)
+#compute p-values 
+out=dmvc(beta=beta,covariate=covariate)
+head(out)
+```
+
+# Reference
+James Y. Dai et al. Incorporating increased variability in differential 
+methylation and cancer biomarker discovery, 
+Genome Biology 2021, submitted.
